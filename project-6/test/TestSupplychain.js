@@ -253,9 +253,18 @@ contract('SupplyChain', function(accounts) {
         const supplyChain = await SupplyChain.deployed()
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
-        
+        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
+
+
         // Verify the result set:
+        assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU');
+        assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC');
+        assert.equal(resultBufferOne[2], consumerID, 'Error: Invalid item Owner');
+        assert.equal(resultBufferOne[3], originFarmerID, 'Error: Invalid item Farmer');
+        assert.equal(resultBufferOne[4], originFarmName, 'Error: Invalid item Farm Name');
+        assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Invalid item Farm Information');
+        assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Invalid item Farm Latotude');
+        assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Invalid item Farm Longitude');
         
     })
 
@@ -264,9 +273,19 @@ contract('SupplyChain', function(accounts) {
         const supplyChain = await SupplyChain.deployed()
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
-        
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc);
+
+
         // Verify the result set:
+        assert.equal(resultBufferTwo[0], sku, 'Error: Invalid item SKU');
+        assert.equal(resultBufferTwo[1], upc, 'Error: Invalid item UPC');
+        assert.equal(resultBufferTwo[2], productID, 'Error: Invalid item ID');
+        assert.equal(resultBufferTwo[3], productNotes, 'Error: Invalid item Notes');
+        assert.equal(resultBufferTwo[4], productPrice, 'Error: Invalid item Price');
+        assert.equal(resultBufferTwo[5], 7, 'Error: Invalid item State');
+        assert.equal(resultBufferTwo[6], distributorID, 'Error: Invalid item Distributor');
+        assert.equal(resultBufferTwo[7], retailerID, 'Error: Invalid item Retailer');
+        assert.equal(resultBufferTwo[8], consumerID, 'Error: Invalid item Consumer');
         
     })
 
