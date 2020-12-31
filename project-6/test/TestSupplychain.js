@@ -225,21 +225,27 @@ contract('SupplyChain', function(accounts) {
     // 8th Test
     it("Testing smart contract function purchaseItem() that allows a consumer to purchase coffee", async() => {
         const supplyChain = await SupplyChain.deployed()
+        await supplyChain.addConsumer(consumerID, { from: ownerID });
         
         // Declare and Initialize a variable for event
-        
+        var eventEmitted = false
         
         // Watch the emitted event Purchased()
-        
+        await supplyChain.Received((err, res)=> eventEmitted = true)
 
-        // Mark an item as Sold by calling function buyItem()
-        
+        // Mark an item as Received by calling function purchaseItem()
+        await supplyChain.purchaseItem(upc, { from: consumerID });
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
+        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc);
 
         // Verify the result set
-        
+        assert.equal(resultBufferOne[2], consumerID, 'Error: Invalid item Owner'); // make sure owner is Retailer
+        assert.equal(resultBufferTwo[5], 7, 'Error: Invalid item State'); // state is updated to Received
+        assert.equal(resultBufferTwo[8], consumerID, 'Error: Invalid item Consumer');
+        assert.equal(eventEmitted, true, 'Received event not emitted');
+  
     })    
 
     // 9th Test
